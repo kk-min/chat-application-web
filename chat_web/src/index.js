@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles/";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 export const themeOptions = createTheme({
 	palette: {
@@ -15,8 +15,11 @@ export const themeOptions = createTheme({
 			main: "#0099f5",
 		},
 		background: {
-			default: "#cff7f3",
+			default: "#d7fbf7",
 		},
+	},
+	typography: {
+		fontFamily: "Nunito",
 	},
 });
 
