@@ -43,7 +43,7 @@ export default function LoginMenu(props) {
       >
         <TextField
           label="Enter secret"
-          type="search"
+          type="password"
           onChange={(event) => {
             setSecret(event.target.value);
           }}
