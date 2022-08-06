@@ -39,7 +39,7 @@ export default function ChatScreen() {
         setLoggedIn(false);
       }
     });
-
+    /*
     //Firestore test:
     const createNewDoc = async () => {
       setDoc(doc(db, "chat_history", "4"), {
@@ -52,7 +52,7 @@ export default function ChatScreen() {
 
     createNewDoc().catch(() => {
       console.log("Firestore operation failed!");
-    });
+    });*/
   }, []);
 
   const handleChatBoxChange = (event) => {
