@@ -3,6 +3,7 @@ import { Grid, Typography, Box } from "@mui/material";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChatBox from "../components/ChatBox";
+import ChatBubble from "../components/ChatBubble";
 
 const handleEnter = (event) => {
   if (event.key == "Enter" && event.shiftKey) {
@@ -41,8 +42,16 @@ export default function ChatScreen() {
     <Grid
       container
       spacing={0}
+      direction="column"
+      justifyContent="flex-end"
+      p={2}
       sx={{ minHeight: "100vh", bgcolor: "background.default" }}
     >
+      <ChatBubble message="Hello, this is a message!" type="sent"></ChatBubble>
+      <ChatBubble
+        message="Hello, this is a reply!"
+        type="received"
+      ></ChatBubble>
       <ChatBox
         currentText={currentText}
         handleChatBoxChange={handleChatBoxChange}

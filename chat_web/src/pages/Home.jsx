@@ -3,6 +3,7 @@ import { TextField, Button, Grid, Typography } from "@mui/material";
 import LoginMenu from "../components/LoginMenu";
 import CircularProgress from "@mui/material/CircularProgress";
 import ConnectionFailed from "../components/SecretFail";
+import ChatBubble from "../components/ChatBubble";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
