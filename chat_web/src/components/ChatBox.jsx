@@ -1,7 +1,12 @@
 import React from "react";
 import { TextField, Grid, Button, Box } from "@mui/material";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { Timestamp } from "firebase/firestore";
 
 export default function ChatBox(props) {
+  const currentText = props.currentText;
+
   return (
     <Grid
       container
@@ -30,7 +35,7 @@ export default function ChatBox(props) {
         sm={1}
         mb={1}
       >
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={props.handleSend}>
           Send
         </Button>
       </Grid>

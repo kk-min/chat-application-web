@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Typography, Box, List, ListItem } from "@mui/material";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -39,67 +39,25 @@ export default function ChatScreen() {
         setLoggedIn(false);
       }
     });
+    /*
+    //Firestore test:
+    const createNewDoc = async () => {
+      setDoc(doc(db, "chat_history", "4"), {
+        name: "Tester",
+        message: "This is a test messaged added to firestore via code!",
+        timestamp: Timestamp.now(),
+      });
+      console.log("Just finished setDoc function");
+    };
+
+    createNewDoc().catch(() => {
+      console.log("Firestore operation failed!");
+    });*/
   }, []);
 
   const handleChatBoxChange = (event) => {
-    console.log("In handleChatBoxChange!");
     setCurrentText(event.target.value);
   };
 
-  const handleSend = useCallback(async () => {
-    if (currentText == "") {
-      return;
-    }
-    setCurrentText("");
-    setDoc(doc(db, "chat_history", "5"), {
-      name: "Tester",
-      message: currentText,
-      timestamp: Timestamp.now(),
-    });
-    console.log("Just finished setDoc function");
-  });
-
-  return loggedIn ? (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      justifyContent="flex-end"
-      p={2}
-      sx={{ minHeight: "100vh", bgcolor: "background.default" }}
-    >
-      <ChatWindow />
-      <ChatBox
-        currentText={currentText}
-        handleChatBoxChange={handleChatBoxChange}
-        handleEnter={handleEnter}
-        handleSend={handleSend}
-      />
-    </Grid>
-  ) : loggedIn == null ? (
-    <Grid
-      container
-      spacing={0}
-      sx={{ minHeight: "100vh", bgcolor: "background.default" }}
-    ></Grid>
-  ) : (
-    <Grid
-      container
-      spacing={0}
-      alignItems="center"
-      justifyContent="center"
-      sx={{ minHeight: "100vh", bgcolor: "background.default" }}
-    >
-      <Typography
-        id="title"
-        variant="h3"
-        sx={{
-          padding: 3,
-          fontWeight: "bold",
-        }}
-      >
-        Nice Try
-      </Typography>
-    </Grid>
-  );
+  return loggedIn ? <ChatWindow></ChatWindow> : null;
 }
