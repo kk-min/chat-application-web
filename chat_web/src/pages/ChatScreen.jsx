@@ -4,6 +4,12 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChatBox from "../components/ChatBox";
 import ChatBubble from "../components/ChatBubble";
+import ChatWindow from "../components/ChatWindow";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { Timestamp } from "firebase/firestore";
+
+const chatHistoryRef = collection(db, "chat_history");
 
 const handleEnter = (event) => {
   if (event.key == "Enter" && event.shiftKey) {
@@ -19,6 +25,7 @@ export default function ChatScreen() {
   const [loggedIn, setLoggedIn] = React.useState(null);
 
   useEffect(() => {
+    //Set up observer on user authentication:
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -31,6 +38,20 @@ export default function ChatScreen() {
         console.log("Not signed in!");
         setLoggedIn(false);
       }
+    });
+
+    //Firestore test:
+    const createNewDoc = async () => {
+      setDoc(doc(db, "chat_history", "4"), {
+        name: "Tester",
+        message: "This is a test messaged added to firestore via code!",
+        timestamp: Timestamp.now(),
+      });
+      console.log("Just finished setDoc function");
+    };
+
+    createNewDoc().catch(() => {
+      console.log("Firestore operation failed!");
     });
   }, []);
 
@@ -52,6 +73,7 @@ export default function ChatScreen() {
         message="Hello, this is a reply!"
         type="received"
       ></ChatBubble>
+      <ChatWindow></ChatWindow>
       <ChatBox
         currentText={currentText}
         handleChatBoxChange={handleChatBoxChange}
