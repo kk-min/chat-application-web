@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "firebase": "^9.9.2"
+    "firebase": "^9.9.2",
+    "react-window": "^1.8.7"
   }
 }

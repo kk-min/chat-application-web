@@ -47,10 +47,16 @@ export default function LoginMenu(props) {
           onChange={(event) => {
             setSecret(event.target.value);
           }}
+          onKeyDown={(event) => {
+            if (event.key == "Enter") {
+              submitSecret(secret);
+            }
+          }}
         ></TextField>
         <Button
           sx={{ margin: 2 }}
           color="primary"
+          s
           variant="contained"
           onClick={() => submitSecret(secret)}
         >
