@@ -1,6 +1,37 @@
-import React from "react";
-import { Card } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
 
 export default function ChatBubble(props) {
-  <Card></Card>;
+  const [type, setType] = useState(null);
+  const [color, setColor] = useState(null);
+  const [alignment, setAlignment] = useState(null);
+
+  useEffect(() => {
+    setType(props.type);
+    if (type == "sent") {
+      setAlignment("flex-end");
+      setColor("primary");
+    } else {
+      // received
+      setAlignment("flex-start");
+      setColor("secondary");
+    }
+  });
+
+  return (
+    <Grid container item p={2} justifyContent={alignment}>
+      <Card
+        alignItems="center"
+        justifyContent="center"
+        variant="outlined"
+        sx={{ bgcolor: color + ".main" }}
+      >
+        <CardContent>
+          <Typography color={color + ".contrastText"}>
+            {props.message}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  );
 }
