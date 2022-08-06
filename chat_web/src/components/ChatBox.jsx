@@ -3,8 +3,14 @@ import { TextField, Grid, Button, Box } from "@mui/material";
 
 export default function ChatBox(props) {
   return (
-    <Grid container direction="row" xs={12} alignItems="flex-end">
-      <Grid item sx={{ padding: 2, paddingRight: 0 }} xs={11}>
+    <Grid container direction="row" alignItems="flex-end">
+      <Grid
+        item
+        sx={{ padding: 2, paddingRight: 0 }}
+        xs={11}
+        alignItems="center"
+        justifyContent="center"
+      >
         <TextField
           id="chatBox"
           multiline
@@ -19,10 +25,9 @@ export default function ChatBox(props) {
       </Grid>
       <Grid
         item
-        container
         alignItems="center"
         justifyContent="center"
-        sx={{ padding: 1, mb: 2, paddingLeft: 0 }}
+        sx={{ padding: 2, mb: 1, paddingLeft: 0, paddingRight: 0 }}
         xs={1}
       >
         <Button variant="contained" size="large">

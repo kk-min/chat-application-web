@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Grid, Button } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChatBox from "../components/ChatBox";
@@ -15,7 +15,7 @@ const handleEnter = (event) => {
 
 export default function ChatScreen() {
   const [currentText, setCurrentText] = React.useState("");
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -49,15 +49,30 @@ export default function ChatScreen() {
         handleEnter={handleEnter}
       />
     </Grid>
-  ) : (
+  ) : loggedIn == null ? (
     <Grid
       container
       spacing={0}
       sx={{ minHeight: "100vh", bgcolor: "background.default" }}
+    ></Grid>
+  ) : (
+    <Grid
+      container
+      spacing={0}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: "100vh", bgcolor: "background.default" }}
     >
-      {setTimeout(() => {
-        return <h1>Nice try</h1>;
-      }, 5000)}
+      <Typography
+        id="title"
+        variant="h3"
+        sx={{
+          padding: 3,
+          fontWeight: "bold",
+        }}
+      >
+        Nice Try
+      </Typography>
     </Grid>
   );
 }
