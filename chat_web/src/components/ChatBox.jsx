@@ -1,11 +1,66 @@
-import React from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { TextField, Grid, Button, Box } from "@mui/material";
-import { collection, doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  Timestamp,
+  onSnapshot,
+  query,
+  collection,
+  documentId,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { Timestamp } from "firebase/firestore";
+import { useEffect } from "react";
+
+const lastq = query(
+  collection(db, "chat_history"),
+  orderBy(documentId(), "desc"),
+  limit(1)
+);
 
 export default function ChatBox(props) {
-  const currentText = props.currentText;
+  const [currentText, setCurrentText] = useState("");
+  const [currentID, setCurrentID] = useState();
+
+  const handleChatBoxChange = (event) => {
+    setCurrentText(event.target.value);
+  };
+
+  const handleSend = useCallback(async () => {
+    console.log(currentText);
+    console.log(currentID);
+    if (currentText == "") {
+      console.log("Empty string found.");
+      return;
+    }
+    setDoc(doc(db, "chat_history", currentID.toString()), {
+      name: props.userName,
+      message: currentText,
+      timestamp: Timestamp.now(),
+    });
+    setCurrentText("");
+    console.log("Message sent.");
+  }, [currentText]);
+
+  const handleEnter = (event) => {
+    if (event.key == "Enter" && event.shiftKey) {
+      return;
+    } else if (event.key == "Enter") {
+      handleSend();
+      event.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    const lastunsubscribe = onSnapshot(lastq, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setCurrentID(parseInt(doc.id, 10) + 1);
+        console.log("Latest ID: ", doc.id);
+      });
+    });
+  }, [currentID]);
 
   return (
     <Grid
@@ -20,10 +75,10 @@ export default function ChatBox(props) {
           id="chatBox"
           multiline
           fullWidth
-          value={props.currentText}
-          onChange={props.handleChatBoxChange}
+          value={currentText}
+          onChange={handleChatBoxChange}
           variant="filled"
-          onKeyDown={props.handleEnter}
+          onKeyDown={handleEnter}
           sx={{ fontSize: 50 }}
         ></TextField>
       </Grid>
@@ -35,7 +90,7 @@ export default function ChatBox(props) {
         sm={1}
         mb={1}
       >
-        <Button variant="contained" size="large" onClick={props.handleSend}>
+        <Button variant="contained" size="large" onClick={handleSend}>
           Send
         </Button>
       </Grid>

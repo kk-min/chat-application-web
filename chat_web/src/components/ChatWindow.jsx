@@ -11,9 +11,11 @@ import {
 import ChatBubble from "./ChatBubble";
 import { Virtuoso } from "react-virtuoso";
 import { db } from "../firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import { onSnapshot, query, collection } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+const q = query(collection(db, "chat_history"));
 
 const MUIComponents = {
   List: React.forwardRef(({ style, children }, listRef) => {
@@ -55,34 +57,43 @@ const MUIComponents = {
 
 export default function ChatWindow(props) {
   const [currentList, setCurrentList] = useState();
+  const [currentID, setCurrentID] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentList([
-      "Hello",
-      "Goodbye",
-      "Ok?",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-      "Goodbye",
-    ]);
-    console.log(currentList);
+    if (props.userName == null) {
+      navigate("/name");
+    }
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const chat_history = [];
+      querySnapshot.forEach((doc) => {
+        chat_history.push({
+          name: doc.data().name,
+          message: doc.data().message,
+        });
+      });
+      console.log("Current Chat History: ", chat_history.join(", "));
+      setCurrentList(chat_history.map((item) => item));
+      console.log(currentList);
+    });
+
+    console.log(currentID);
   }, []);
+
   return (
-    <div>
-      <Virtuoso
-        style={{ minHeight: "90vh", flexGrow: 1, display: "flex" }}
-        data={currentList}
-        components={MUIComponents}
-        itemContent={(index, item) => {
-          return <ChatBubble message={item} type="sent"></ChatBubble>;
-        }}
-      ></Virtuoso>
-    </div>
+    <Virtuoso
+      style={{ minHeight: "90vh", flexGrow: 1, display: "flex" }}
+      data={currentList}
+      components={MUIComponents}
+      itemContent={(index, item) => {
+        return (
+          <ChatBubble
+            message={item["message"]}
+            type={item["name"] == props.userName ? "sent" : "received"}
+          ></ChatBubble>
+        );
+      }}
+    ></Virtuoso>
   );
 }
