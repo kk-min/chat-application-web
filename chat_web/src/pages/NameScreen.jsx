@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { TextField, Button, Grid, Typography } from "@mui/material";
 import LoginMenu from "../components/LoginMenu";
 import CircularProgress from "@mui/material/CircularProgress";
-import SecretFail from "../components/SecretFail";
+import ConnectionFailed from "../components/SecretFail";
 import ChatBubble from "../components/ChatBubble";
+import NameMenu from "../components/NameMenu";
 
-export default function Home() {
+export default function NameScreen(props) {
   const [loading, setLoading] = useState(false);
-  const [connectionFailed, setConnectionFailed] = useState(false);
   return (
     <Grid
       container
@@ -17,15 +17,10 @@ export default function Home() {
       justifyContent="center"
       sx={{ minHeight: "100vh", bgcolor: "background.default" }}
     >
-      {connectionFailed ? (
-        <SecretFail setConnectionFailed={setConnectionFailed} />
-      ) : loading ? (
+      {loading ? (
         <CircularProgress size={60} />
       ) : (
-        <LoginMenu
-          setLoading={setLoading}
-          setConnectionFailed={setConnectionFailed}
-        />
+        <NameMenu setLoading={setLoading} setUserName={props.setUserName} />
       )}
     </Grid>
   );
