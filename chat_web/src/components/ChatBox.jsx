@@ -7,42 +7,40 @@ import {
   onSnapshot,
   query,
   collection,
-  documentId,
   orderBy,
   limit,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect } from "react";
 
 const lastq = query(
   collection(db, "chat_history"),
-  orderBy(documentId(), "desc"),
+  orderBy("timestamp", "desc"),
   limit(1)
 );
 
 export default function ChatBox(props) {
   const [currentText, setCurrentText] = useState("");
-  const [currentID, setCurrentID] = useState();
 
   const handleChatBoxChange = (event) => {
     setCurrentText(event.target.value);
   };
 
-  const handleSend = useCallback(async () => {
+  const handleSend = async () => {
     console.log(currentText);
-    console.log(currentID);
-    if (currentText == "") {
+    if (currentText === "") {
       console.log("Empty string found.");
       return;
     }
-    setDoc(doc(db, "chat_history", currentID.toString()), {
+    addDoc(collection(db, "chat_history"), {
       name: props.userName,
       message: currentText,
       timestamp: Timestamp.now(),
     });
     setCurrentText("");
     console.log("Message sent.");
-  }, [currentText]);
+  };
 
   const handleEnter = (event) => {
     if (event.key == "Enter" && event.shiftKey) {
@@ -52,15 +50,6 @@ export default function ChatBox(props) {
       event.preventDefault();
     }
   };
-
-  useEffect(() => {
-    const lastunsubscribe = onSnapshot(lastq, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        setCurrentID(parseInt(doc.id, 10) + 1);
-        console.log("Latest ID: ", doc.id);
-      });
-    });
-  }, [currentID]);
 
   return (
     <Grid
