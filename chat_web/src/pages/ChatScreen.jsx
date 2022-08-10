@@ -33,7 +33,7 @@ export default function ChatScreen(props) {
         setLoggedIn(false);
       }
     });
-  }, []);
+  }, [loggedIn]);
 
   return loggedIn ? (
     <Grid
