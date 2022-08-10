@@ -21,6 +21,7 @@ export default function ChatScreen(props) {
 
   useEffect(() => {
     //Set up observer on user authentication:
+    //Set up observer on user authentication:
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
