@@ -3,18 +3,7 @@ import { Grid, Typography, Box, List, ListItem } from "@mui/material";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChatBox from "../components/ChatBox";
-import ChatBubble from "../components/ChatBubble";
 import ChatWindow from "../components/ChatWindow";
-import {
-  collection,
-  doc,
-  setDoc,
-  Timestamp,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../firebase";
 
 export default function ChatScreen(props) {
   const [loggedIn, setLoggedIn] = React.useState(null);

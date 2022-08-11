@@ -19,7 +19,7 @@ export default function ChatBubble(props) {
   });
 
   return (
-    <Grid container item p={2} justifyContent={alignment}>
+    <Grid container item p={{xs: 0, sm: 2}} justifyContent={alignment}>
       <Card
         alignItems="center"
         justifyContent="center"

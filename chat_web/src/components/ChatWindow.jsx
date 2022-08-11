@@ -80,7 +80,7 @@ export default function ChatWindow(props) {
   return (
     <Virtuoso
       ref={virtuoso}
-      style={{ minHeight: "90vh", flexGrow: 1, display: "flex" }}
+      style={{ minHeight: "80vh", flexGrow: 1, display: "flex" }}
       data={currentList}
       initialTopMostItemIndex={currentList.length - 1}
       followOutput="smooth"
