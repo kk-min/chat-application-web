@@ -58,8 +58,9 @@ export default function ChatBox(props) {
       justifyContent="flex-end"
       alignItems="flex-end"
       spacing={1}
+
     >
-      <Grid item xs={8} sm={11} alignItems="center" justifyContent="center">
+      <Grid item xs={8} sm={11} alignItems="center" justifyContent="center" >
         <TextField
           id="chatBox"
           multiline
@@ -68,7 +69,7 @@ export default function ChatBox(props) {
           onChange={handleChatBoxChange}
           variant="filled"
           onKeyDown={handleEnter}
-          sx={{ fontSize: 50 }}
+          sx={{ fontSize: 50}}
         ></TextField>
       </Grid>
       <Grid

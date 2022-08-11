@@ -39,7 +39,7 @@ export default function LoginMenu(props) {
         Chat with Min
       </Typography>
       <Box
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center", }}
       >
         <TextField
           label="Enter secret"
@@ -52,6 +52,7 @@ export default function LoginMenu(props) {
               submitSecret(secret);
             }
           }}
+          sx={{marginLeft: 2}}
         ></TextField>
         <Button
           sx={{ margin: 2 }}
