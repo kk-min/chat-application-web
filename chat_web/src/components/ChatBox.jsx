@@ -55,12 +55,11 @@ export default function ChatBox(props) {
     <Grid
       container
       direction="row"
-      justifyContent="flex-end"
+      justifyContent="flex-start"
       alignItems="flex-end"
-      spacing={1}
-
+      spacing={0}
     >
-      <Grid item xs={8} sm={11} alignItems="center" justifyContent="center" >
+      <Grid item xs={8} sm={11} alignItems="center" justifyContent="center" sx={{mr: 0}} >
         <TextField
           id="chatBox"
           multiline
@@ -74,13 +73,14 @@ export default function ChatBox(props) {
       </Grid>
       <Grid
         item
-        alignItems="center"
-        justifyContent="center"
+        alignItems="flex-start"
+        justifyContent="flex-start"
         xs={4}
         sm={1}
         mb={1}
+        sx={{ml: 0}}
       >
-        <Button variant="contained" size="large" onClick={handleSend}>
+        <Button variant="contained" size="large" onClick={handleSend} >
           Send
         </Button>
       </Grid>

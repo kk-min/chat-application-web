@@ -24,9 +24,10 @@ export default function ChatBubble(props) {
         alignItems="center"
         justifyContent="center"
         variant="outlined"
-        sx={{ bgcolor: color + ".main" , maxWidth: "50%"}}
+        sx={{ bgcolor: color + ".main" , maxWidth: "90%"}}
       >
         <CardContent>
+          <Typography color={color + ".contrastText"} sx={{ fontSize: 12 }}><b>{props.userName}</b></Typography>
           <Typography color={color + ".contrastText"}>
             {props.message}
           </Typography>

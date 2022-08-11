@@ -1,15 +1,35 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Grid, Typography, Box, List, ListItem } from "@mui/material";
+import { Grid, Typography, Box, Stack } from "@mui/material";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ChatBox from "../components/ChatBox";
 import ChatWindow from "../components/ChatWindow";
+import { useNavigate } from "react-router-dom";
+import EscapeDialog from "../components/EscapeDialog";
+
+
 
 export default function ChatScreen(props) {
-  const [loggedIn, setLoggedIn] = React.useState(null);
+  const [loggedIn, setLoggedIn] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOption, setDialogOption] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClose = (value) =>{
+    setDialogOpen(false);
+    setDialogOption(value);
+  }
+
+  const handleEsc = (event) =>{
+    if(event.key == "Escape"){
+      setDialogOpen(true);
+    }
+  }
 
   useEffect(() => {
-    //Set up observer on user authentication:
+    if(dialogOption === true){
+      navigate("/");
+    }
     //Set up observer on user authentication:
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -23,18 +43,31 @@ export default function ChatScreen(props) {
         setLoggedIn(false);
       }
     });
-  }, [loggedIn]);
+
+    //Set up observer on keypress:
+    document.addEventListener('keydown', handleEsc);
+
+    // Don't forget to clean up
+    return function cleanup() {
+      document.removeEventListener('keydown', handleEsc);
+    }
+
+  }, [loggedIn, dialogOption]);
 
   return loggedIn ? (
     <Grid
       container
-      spacing={0}
-      direction="column"
+      justifyContent="flex-end"
       p={2}
       sx={{ minHeight: "100vh", bgcolor: "background.default" }}
-    >
-      <ChatWindow userName={props.userName} />
-      <ChatBox userName={props.userName} />
+    > 
+      <Grid container sx={{ justifyContent: "flex-start", alignItems: "flex-start"}} xs={12}>
+        <ChatWindow userName={props.userName}/>
+      </Grid>
+        <Grid container xs={12} sx={{justifyContent: "flex-start",}}>
+          <ChatBox userName={props.userName} />
+      </Grid>
+      <EscapeDialog onClose={handleClose} open={dialogOpen}/>
     </Grid>
   ) : loggedIn == null ? (
     <Grid

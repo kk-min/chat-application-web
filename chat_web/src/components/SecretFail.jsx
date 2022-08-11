@@ -8,7 +8,7 @@ export default function SecretFail(props) {
   });
   return (
     <Box container>
-      <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+      <Typography variant="h4" sx={{ fontWeight: "bold", color: "secondary.main" }}>
         You do not know the secret!
       </Typography>
       <Button
@@ -20,7 +20,7 @@ export default function SecretFail(props) {
           props.setConnectionFailed(false);
         }}
       >
-        Return
+        <b>Return</b>
       </Button>
     </Box>
   );

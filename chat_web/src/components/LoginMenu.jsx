@@ -34,7 +34,7 @@ export default function LoginMenu(props) {
       <Typography
         id="title"
         variant="h3"
-        sx={{ padding: 3, fontWeight: "bold" }}
+        sx={{ padding: 3, fontWeight: "bold", color: "secondary.main" }}
       >
         Chat with Min
       </Typography>
@@ -61,7 +61,7 @@ export default function LoginMenu(props) {
           variant="contained"
           onClick={() => submitSecret(secret)}
         >
-          Connect
+          <b>Connect</b>
         </Button>
       </Box>
     </Box>
