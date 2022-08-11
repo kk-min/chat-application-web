@@ -9,14 +9,14 @@ let themeOptions = createTheme({
   palette: {
     type: "light",
     primary: {
-      main: "rgba(224,103,104,0.67)",
-      contrastText: "#fff",
+      main: "#9883f0",
     },
     secondary: {
-      main: "#0099f5",
+      main: "#5280ea",
+      //contrastText: "#fff",
     },
     background: {
-      default: "#d7fbf7",
+      default: "#e0dffa",
     },
   },
   typography: {

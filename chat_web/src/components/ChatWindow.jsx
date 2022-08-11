@@ -7,6 +7,7 @@ import {
   ListItem,
   List,
   ListSubheader,
+  CircularProgress,
 } from "@mui/material";
 import ChatBubble from "./ChatBubble";
 import { Virtuoso } from "react-virtuoso";
@@ -55,7 +56,7 @@ const MUIComponents = {
 
 export default function ChatWindow(props) {
   const [currentList, setCurrentList] = useState([]);
-  const [currentID, setCurrentID] = useState();
+
   const navigate = useNavigate();
   const virtuoso = useRef(null);
 
@@ -77,10 +78,10 @@ export default function ChatWindow(props) {
     });
   }, [navigate, props.userName]);
 
-  return (
+  return  (
     <Virtuoso
       ref={virtuoso}
-      style={{ minHeight: "80vh", flexGrow: 1, display: "flex" }}
+      style={{ minHeight: "90vh", flexGrow: 1, display: "flex" }}
       data={currentList}
       initialTopMostItemIndex={currentList.length - 1}
       followOutput="smooth"
@@ -90,6 +91,7 @@ export default function ChatWindow(props) {
           <ChatBubble
             message={item["message"]}
             type={item["name"] == props.userName ? "sent" : "received"}
+            userName={item["name"]}
           ></ChatBubble>
         );
       }}

@@ -19,7 +19,7 @@ export default function NameMenu(props) {
       <Typography
         id="title"
         variant="h4"
-        sx={{ padding: 3, fontWeight: "bold" }}
+        sx={{ padding: 3, fontWeight: "bold", color: "secondary.main" }}
       >
         Welcome!
       </Typography>
@@ -45,7 +45,7 @@ export default function NameMenu(props) {
         variant="contained"
         onClick={() => submitName(currentName)}
       >
-        Chat with Min
+        <b>Chat with Min</b>
       </Button>
     </Box>
   );
