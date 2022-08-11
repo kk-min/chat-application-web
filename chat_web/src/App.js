@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routers, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
@@ -8,6 +8,10 @@ import Debug from "./pages/Debug";
 
 function App() {
   const [userName, setUserName] = useState();
+
+  useEffect(() =>{
+    document.body.style.overflow = "hidden";
+  })
 
   return (
     <div className="App">
