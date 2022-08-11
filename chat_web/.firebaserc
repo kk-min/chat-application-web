@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "min-simple-chat-app"
-  }
+  },
+  "targets": {
+    "min-simple-chat-app": {
+      "hosting": {}
+    }
+  },
+  "etags": {}
 }
