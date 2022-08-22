@@ -1,18 +1,32 @@
-import React, { useState } from "react";
-import { TextField, Button, Grid, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-import NameMenu from "../components/NameMenu";
+import React from "react";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useState } from "react";
 
 export default function Welcome(props) {
-	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		setTimeout(() => {
-			navigate("/chat");
-		}, 4000);
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				console.log("Authorization granted.");
+				props.setLoggedIn(true);
+				setLoading(false);
+				setTimeout(() => {
+					navigate("/chat");
+				}, 3500);
+			} else {
+				// User is signed out
+				console.log("Not authorized.");
+				setLoading(false);
+			}
+		});
 	}, []);
 
 	return (
@@ -25,11 +39,38 @@ export default function Welcome(props) {
 			sx={{ minHeight: "100vh", bgcolor: "background.default" }}
 		>
 			{loading ? (
-				<CircularProgress size={60} />
-			) : (
+				<></>
+			) : props.loggedIn ? (
 				<Fade in={true} timeout={3000}>
-					<Typography variant='h3'>Welcome! :'{")"}</Typography>
+					<Typography variant='h3'>Welcome 💖</Typography>
 				</Fade>
+			) : props.loggedIn == null ? (
+				<Grid
+					container
+					spacing={0}
+					alignItems='center'
+					justifyContent='center'
+					sx={{ minHeight: "100vh", bgcolor: "background.default" }}
+				/>
+			) : (
+				<Grid
+					container
+					spacing={0}
+					alignItems='center'
+					justifyContent='center'
+					sx={{ minHeight: "100vh", bgcolor: "background.default" }}
+				>
+					<Typography
+						id='title'
+						variant='h3'
+						sx={{
+							padding: 3,
+							fontWeight: "bold",
+						}}
+					>
+						Nice Try
+					</Typography>
+				</Grid>
 			)}
 		</Grid>
 	);
