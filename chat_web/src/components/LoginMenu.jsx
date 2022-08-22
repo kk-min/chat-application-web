@@ -17,7 +17,7 @@ export default function LoginMenu(props) {
           // Signed in
           props.setLoading(false);
           const user = userCredential.user;
-          navigate("/name");
+          navigate("/welcome");
         })
         .catch((error) => {
           console.log("Connection failed!");
