@@ -8,9 +8,10 @@ import { useNavigate } from "react-router-dom";
 import EscapeDialog from "../components/EscapeDialog";
 
 export default function ChatScreen(props) {
-	const [loggedIn, setLoggedIn] = useState(null);
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [dialogOption, setDialogOption] = useState(false);
+	const [loading, setLoading] = useState(true);
+
 	const navigate = useNavigate();
 
 	const handleClose = (value) => {
@@ -34,11 +35,13 @@ export default function ChatScreen(props) {
 				// User is signed in, see docs for a list of available properties
 				// https://firebase.google.com/docs/reference/js/firebase.User
 				console.log("Authorization granted.");
-				setLoggedIn(true);
+				props.setLoggedIn(true);
+				setLoading(false);
 			} else {
 				// User is signed out
 				console.log("Not authorized.");
-				setLoggedIn(false);
+				props.setLoggedIn(false);
+				setLoading(false);
 			}
 		});
 
@@ -49,9 +52,16 @@ export default function ChatScreen(props) {
 		return function cleanup() {
 			document.removeEventListener("keydown", handleEsc);
 		};
-	}, [loggedIn, dialogOption]);
+	}, [dialogOption]);
 
-	return loggedIn ? (
+	return loading ? (
+		<Grid
+			container
+			justifyContent='flex-end'
+			p={0}
+			sx={{ minHeight: "100vh", bgcolor: "background.default" }}
+		/>
+	) : props.loggedIn ? (
 		<Grid
 			container
 			justifyContent='flex-end'
@@ -60,15 +70,17 @@ export default function ChatScreen(props) {
 		>
 			<Grid
 				container
-				sx={{ justifyContent: "flex-start", alignItems: "flex-start" }}
+				item
+				sx={{ justifyContent: "center", alignItems: "center" }}
 				xs={12}
 			>
 				<ChatWindow userName={props.userName} />
 			</Grid>
 			<Grid
 				container
+				item
 				xs={12}
-				sx={{ alignItems: "center" }}
+				sx={{ alignItems: "flex-end" }}
 				mb={5}
 				ml={2}
 				mr={1}
@@ -77,12 +89,6 @@ export default function ChatScreen(props) {
 			</Grid>
 			<EscapeDialog onClose={handleClose} open={dialogOpen} />
 		</Grid>
-	) : loggedIn == null ? (
-		<Grid
-			container
-			spacing={0}
-			sx={{ minHeight: "100vh", bgcolor: "background.default" }}
-		></Grid>
 	) : (
 		<Grid
 			container
