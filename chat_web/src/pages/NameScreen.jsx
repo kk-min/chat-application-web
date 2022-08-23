@@ -5,9 +5,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import ConnectionFailed from "../components/SecretFail";
 import ChatBubble from "../components/ChatBubble";
 import NameMenu from "../components/NameMenu";
+import NameFail from "../components/NameFail";
 
 export default function NameScreen(props) {
   const [loading, setLoading] = useState(false);
+  const [invalidName, setInvalidName] = useState(false);
   return (
     <Grid
       container
@@ -19,8 +21,8 @@ export default function NameScreen(props) {
     >
       {loading ? (
         <CircularProgress size={60} />
-      ) : (
-        <NameMenu setLoading={setLoading} setUserName={props.setUserName} />
+      ) : invalidName ? (<NameFail setInvalidName={setInvalidName}/>) : (
+        <NameMenu setLoading={setLoading} setInvalidName={setInvalidName} setUserName={props.setUserName} />
       )}
     </Grid>
   );

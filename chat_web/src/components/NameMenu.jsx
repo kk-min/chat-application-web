@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function NameMenu(props) {
   const [currentName, setCurrentName] = useState("");
   const navigate = useNavigate();
 
+  const handleEnter = (event) =>{
+    if(event.key == "Enter"){
+      submitName(currentName);
+    }
+    return
+  }
+  
   const submitName = (name) => {
-    props.setLoading(true);
+    console.log("In submit name");
+    props.setLoading(() => true);
+    if(name === "Min"){
+      setCurrentName("");
+      props.setInvalidName(() => true);
+      props.setLoading(() => false);
+      console.log(currentName);
+      return;
+    }
     setTimeout(() => {
       props.setUserName(name);
       navigate("/chat");
@@ -32,11 +48,7 @@ export default function NameMenu(props) {
           onChange={(event) => {
             setCurrentName(event.target.value);
           }}
-          onKeyDown={(event) => {
-            if (event.key == "Enter") {
-              submitName(currentName);
-            }
-          }}
+          onKeyUp={handleEnter}
         ></TextField>
       </Box>
       <Button
