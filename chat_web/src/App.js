@@ -17,6 +17,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+					<Route path='*' element={<Navigate replace to='/' />} />
           <Route path="/" element={<Home />} />
           <Route
             path="/name"
