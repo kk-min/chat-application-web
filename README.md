@@ -1,5 +1,6 @@
 # Chat with Min (Web)
 _Copyright © 2022 Min Kabar Kyaw_  
+
 Web version of chat application implemented ![here](https://github.com/mink0003/chat-application-desktop), with extra features. This project uses the React framework with Javascript as the frontend and Firestore for backend operations.
 
 ## Introduction
