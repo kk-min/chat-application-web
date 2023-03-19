@@ -14,4 +14,4 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MIN_SIMPLE_CHAT_APP }}'
-          projectId: min-simple-chat-app
+          projectId: 

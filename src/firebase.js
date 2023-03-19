@@ -9,17 +9,17 @@ import {
 
 // Firebase configuration:
 const firebaseConfig = {
-  apiKey: "AIzaSyA_0nZ35w557i9bmaoi4iOMwmRfL62B5CU",
+  apiKey: "",
 
-  authDomain: "min-simple-chat-app.firebaseapp.com",
+  authDomain: "",
 
-  projectId: "min-simple-chat-app",
+  projectId: "",
 
-  storageBucket: "min-simple-chat-app.appspot.com",
+  storageBucket: ".appspot.com",
 
-  messagingSenderId: "350602646172",
+  messagingSenderId: "",
 
-  appId: "1:350602646172:web:575ffa905cefb124565359",
+  appId: "1::web:575ffa905cefb124565359",
 };
 
 // Initialize Firebase
