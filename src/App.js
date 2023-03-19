@@ -4,7 +4,6 @@ import "./App.css";
 import Home from "./pages/Home";
 import NameScreen from "./pages/NameScreen";
 import ChatScreen from "./pages/ChatScreen";
-import Debug from "./pages/Debug";
 
 function App() {
   const [userName, setUserName] = useState();
@@ -24,7 +23,6 @@ function App() {
             element={<NameScreen setUserName={setUserName} />}
           />
           <Route path="/chat" element={<ChatScreen userName={userName} />} />
-          <Route path="/debug" element={<Debug />} />
         </Routes>
       </BrowserRouter>
     </div>
